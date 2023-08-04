@@ -9,6 +9,7 @@
 void Painter::setColor(SDL_Color color) 
 { 
     // TODO: set the color value for the Painter and set Render Draw Color
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 }
 
 
@@ -21,6 +22,9 @@ void Painter::setColor(SDL_Color color)
 void Painter::jumpForward(int numPixel)
 {
     // TODO: jump the painter forward
+	float rad = (angle / 180) * M_PI;
+    	x += cos(rad) * numPixel;
+    	y -= sin(rad) * numPixel;
 }
 
 
@@ -33,6 +37,7 @@ void Painter::jumpForward(int numPixel)
 void Painter::jumpBackward(int numPixel)
 {
     // TODO: jump the painter backward
+	jumpForward(-numPixel);
 }
 
 
@@ -45,6 +50,8 @@ void Painter::jumpBackward(int numPixel)
 void Painter::turnLeft(double degree)
 {
     // TODO: rotate left the painter   
+	this->angle += degree;
+    	setAngle(fmod(angle, 360));
 }
 
 
@@ -57,6 +64,7 @@ void Painter::turnLeft(double degree)
 void Painter::turnRight(double degree)
 {
     // TODO: rotate right the painter   
+	turnLeft(-degree);
 }
 
 /***  
@@ -67,7 +75,12 @@ void Painter::turnRight(double degree)
 ***/
 void Painter::randomColor()
 {
-    // TODO: set random color    
+    // TODO: set random color   
+	Uint8 r = rand() % 256;
+    	Uint8 g = rand() % 256;
+    	Uint8 b = rand() % 256;
+    	SDL_Color color = {r, g, b};
+    	setColor(color);
 }
 
 
@@ -78,7 +91,7 @@ void Painter::clearWithBgColor(SDL_Color bgColor)
 {
     SDL_Color curColor = color;
     setColor(bgColor);
-	SDL_RenderClear(renderer);    
+    SDL_RenderClear(renderer);    
     setColor(curColor);
 }
 
@@ -149,7 +162,7 @@ void Painter::createSquare(int size)
 {
 	for (int i = 0; i < 4; ++i) {
         moveForward(size);
-	    turnLeft(90);
+	turnLeft(90);
     }
 }
 
