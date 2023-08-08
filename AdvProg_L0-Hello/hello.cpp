@@ -4,5 +4,4 @@
 std::string printGameOver(){
 	// TODO: Return the required string
 	return "Hello, World!";
-	return 0;
 }
